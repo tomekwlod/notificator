@@ -7,8 +7,7 @@ import (
 )
 
 type (
-	Intent  string
-	Channel string
+	Intent string
 )
 
 const (
@@ -24,28 +23,28 @@ type Notifier interface {
 
 type MultiNotifier interface {
 	Notifier // it will simply broadcast to all channels
-	Get(channel Channel) (Notifier, error)
-	List() map[Channel]Notifier
+	Get(channel string) (Notifier, error)
+	List() map[string]Notifier
 	Broadcast(ctx context.Context, title, message string, intent Intent) error
 }
 
 var ErrChannelNotFound = errors.New("channel not found")
 
 type multiNotifier struct {
-	channels map[Channel]Notifier
+	channels map[string]Notifier
 }
 
 func NewMultiNotifier() *multiNotifier {
 	return &multiNotifier{
-		channels: make(map[Channel]Notifier),
+		channels: make(map[string]Notifier),
 	}
 }
 
-func (m *multiNotifier) RegisterChannel(channel Channel, notifier Notifier) {
+func (m *multiNotifier) RegisterChannel(channel string, notifier Notifier) {
 	m.channels[channel] = notifier
 }
 
-func (m *multiNotifier) Get(channel Channel) (Notifier, error) {
+func (m *multiNotifier) Get(channel string) (Notifier, error) {
 	notifier, ok := m.channels[channel]
 	if !ok {
 		return nil, fmt.Errorf("%w: %s", ErrChannelNotFound, channel)
@@ -62,7 +61,7 @@ func (m *multiNotifier) Broadcast(ctx context.Context, title, message string, in
 	return nil
 }
 
-func (m *multiNotifier) List() map[Channel]Notifier {
+func (m *multiNotifier) List() map[string]Notifier {
 	return m.channels
 }
 
