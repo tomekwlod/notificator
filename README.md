@@ -42,7 +42,12 @@ func main() {
 
 ## Semantic Versioning
 
-This project uses semantic versioning through automated GitHub Actions. Version tags are automatically created based on commit message conventions:
+This project uses semantic versioning through automated GitHub Actions. Version tags are automatically created based on commit message conventions.
+
+### Version Tags
+Two types of tags are maintained:
+- **Version Tags** (e.g., v1.2.3): Permanent tags indicating specific versions
+- **Latest Tag**: A movable tag that always points to the most recent version
 
 ### Version Bump Rules
 - **Major Version** (X.0.0): Include `BREAKING CHANGE` or `major:` in commit message
@@ -60,6 +65,12 @@ git commit -m "feat: add slack integration"
 
 # Triggers a patch version bump (0.0.X)
 git commit -m "fix: handle error in teams notification"
+```
+
+### Accessing Latest Version
+To use the most recent version in your project:
+```bash
+go get github.com/tomekwlod/notificator@latest
 ```
 
 ## License

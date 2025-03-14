@@ -62,3 +62,7 @@ jobs:
           git config --local user.name "GitHub Action"
           git tag -a "$new_tag" -m "Release $new_tag"
           git push origin "$new_tag"
+          
+          # Update latest tag
+          git tag -f latest
+          git push -f origin latest
